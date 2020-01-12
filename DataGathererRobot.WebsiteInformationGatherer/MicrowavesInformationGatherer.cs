@@ -21,6 +21,7 @@ namespace DataGathererRobot.WebsiteInformationGatherer
         private const string CssSelectorName = ".schema-product__title span";
         private const string CssSelectorLink = ".schema-product__title a";
         private const string CssSelectorPrice = ".schema-product__price a";
+        private const string PrefixMicrowave = "Микроволновая печь ";
 
         private readonly IWebDriver _driver;
         private readonly List<Microwave> _microwaves;
@@ -37,8 +38,8 @@ namespace DataGathererRobot.WebsiteInformationGatherer
             _driver.FindElement(By.XPath(XpathCatalogue)).Click();
             _driver.FindElement(By.XPath(XpathAppliances)).Click();
             _driver.FindElement(By.XPath(XpathCooking)).Click();
-            new WebDriverWait(_driver, TimeSpan.FromSeconds(10))
-                .Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.XPath(XpathMicrowaves)));
+            var wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.XPath(XpathMicrowaves)));
             _driver.FindElement(By.XPath(XpathMicrowaves)).Click();
             _driver.FindElement(By.XPath(XpathShowOptions)).Click();
             _driver.FindElement(By.XPath(XpathWithReviews)).Click();
@@ -49,7 +50,8 @@ namespace DataGathererRobot.WebsiteInformationGatherer
                 {
                     var microwave = new Microwave
                     {
-                        Name = _driver.FindElement(By.CssSelector($"{CssSelectorProducts}:nth-child({i}) {CssSelectorName}")).Text,
+                        Name = _driver.FindElement(By.CssSelector($"{CssSelectorProducts}:nth-child({i}) {CssSelectorName}"))
+                                      .Text.Substring(PrefixMicrowave.Length),
                         Price = _driver.FindElement(By.CssSelector($"{CssSelectorProducts}:nth-child({i}) {CssSelectorPrice}")).Text,
                         Link = _driver.FindElement(By.CssSelector($"{CssSelectorProducts}:nth-child({i}) {CssSelectorLink}")).GetAttribute("href"),
                     };
