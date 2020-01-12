@@ -58,6 +58,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DataGathererRobot.EmailFileSender\DataGathererRobot.EmailFileSender.csproj">
+      <Project>{ffd07a94-0bd1-47c8-9067-ddbeb3682944}</Project>
+      <Name>DataGathererRobot.EmailFileSender</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DataGathererRobot.ExcelDataFileCreator\DataGathererRobot.ExcelDataFileCreator.csproj">
       <Project>{9a624692-4c9f-406a-8d85-3d49a3716f62}</Project>
       <Name>DataGathererRobot.ExcelDataFileCreator</Name>
